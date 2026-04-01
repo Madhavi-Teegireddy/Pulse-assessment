@@ -1,14 +1,37 @@
 const Video = require("../models/Video");
 
+// exports.uploadVideo = async (req, res) => {
+//   try {
+//     const file = req.file;
+
+//     console.log(file);
+//     const video = await Video.create({
+//       title: file.originalname,
+//       filePath: file.path,
+//       status: "uploaded"
+//     });
+
+//     res.json({
+//       message: "Video uploaded successfully",
+//       video
+//     });
+
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 exports.uploadVideo = async (req, res) => {
   try {
     const file = req.file;
+if (!file) {
+  console.log("File is missing");
+  return res.status(400).json({ message: "No file uploaded" });
+}
 
-    console.log(file);
     const video = await Video.create({
       title: file.originalname,
       filePath: file.path,
-      status: "uploaded"
+      status: "processing"
     });
 
     res.json({
@@ -17,10 +40,10 @@ exports.uploadVideo = async (req, res) => {
     });
 
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
-
 exports.getVideos = async (req, res) => {
     try{
         const videos = await Video.find().sort({ createdAt: -1 });
@@ -41,6 +64,7 @@ exports.streamVideo = async (req, res) => {
     if (!video) {
       return res.status(404).json({ message: "Video not found" });
     }
+    
 
     const videoPath = video.filePath;
 
