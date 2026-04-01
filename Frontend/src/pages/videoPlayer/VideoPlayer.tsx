@@ -54,23 +54,46 @@ export default function VideoPlayer() {
     fetchVideo();
   }, []);
  
-  const fetchVideo = async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem("token");
-      const res = await axios.get(`http://localhost:5000/api/videos`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const found = res.data.find((v: Video) => v._id === id);
-      if (!found) { setError("Video not found"); return; }
-      setVideo(found);
-    } catch {
-      setError("Failed to load video");
-    } finally {
-      setLoading(false);
+  // const fetchVideo = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const token = localStorage.getItem("token");
+  //     const res = await axios.get(`http://localhost:5000/api/videos`, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     const found = res.data.find((v: Video) => v._id === id);
+  //     if (!found) { setError("Video not found"); return; }
+  //     setVideo(found);
+  //   } catch {
+  //     setError("Failed to load video");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+ const fetchVideo = async () => {
+  try {
+    setLoading(true);
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login";
+      return;
     }
-  };
- 
+
+    const res = await axios.get("http://localhost:5000/api/videos", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    console.log(res.data);
+
+    setVideo(res.data.videos || res.data);
+
+  } catch (err) {
+    console.error("Failed to fetch videos", err);
+  } finally {
+    setLoading(false);
+  }
+};
   const streamUrl = `http://localhost:5000/api/videos/stream/${id}`;
  
   // Player controls

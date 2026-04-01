@@ -22,6 +22,12 @@ export default function Signup() {
     try {
       setLoading(true);
       const res = await axios.post("http://localhost:5000/api/auth/signup", form);
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+       setForm({ name: "", email: "", password: "" });
+ 
+      window.location.href = "/dashboard";
       alert("Signup success");
       console.log(res.data);
     } catch (err: any) {

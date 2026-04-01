@@ -56,7 +56,7 @@ export default function Upload() {
  
       await axios.post("http://localhost:5000/api/videos/upload", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
         onUploadProgress: (e) => {

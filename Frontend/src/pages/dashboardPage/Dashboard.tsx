@@ -47,10 +47,15 @@ export default function Dashboard() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "/login";
+        return;
+      }
       const res = await axios.get("http://localhost:5000/api/videos", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setVideos(res.data);
+      setVideos(res.data.videos);
+      console.log(res.data);
     } catch (err) {
       console.error("Failed to fetch videos", err);
     } finally {
@@ -65,7 +70,7 @@ export default function Dashboard() {
  
   const filtered = videos.filter((v) => {
     const matchFilter = filter === "all" || v.status === filter;
-    const matchSearch = v.title?.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = (v.title || "").toLowerCase().includes(search.toLowerCase());
     return matchFilter && matchSearch;
   });
  

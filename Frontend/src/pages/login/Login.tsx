@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../login/losin.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
  
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showPass, setShowPass] = useState(false);
+
+  const navigate = useNavigate();
  
   useEffect(() => {
     setMounted(true);
@@ -18,19 +20,26 @@ export default function Login() {
   };
  
   const handleLogin = async (e: any) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
-      alert("Login success");
-      console.log(res.data);
-      // store token: localStorage.setItem("token", res.data.token);
-    } catch (err: any) {
-      alert(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+  e.preventDefault();
+
+  try {
+    setLoading(true);
+
+    const res = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      form
+    );
+
+    localStorage.setItem("token", res.data.token);
+
+    navigate("/dashboard");
+
+  } catch (err: any) {
+    alert(err.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
  
   return (
     <>
