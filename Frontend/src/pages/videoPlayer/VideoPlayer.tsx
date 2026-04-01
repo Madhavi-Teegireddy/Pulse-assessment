@@ -45,8 +45,7 @@ export default function VideoPlayer() {
   const [muted, setMuted] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
-//   const controlsTimer = useRef<ReturnType<typeof setTimeout>>();
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const controlsTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const playerWrap = useRef<HTMLDivElement>(null);
 
  

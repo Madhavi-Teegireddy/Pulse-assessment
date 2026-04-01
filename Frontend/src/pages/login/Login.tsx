@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../login/losin.css";
+import { Link } from "react-router-dom";
  
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -132,7 +133,9 @@ export default function Login() {
  
           <p className="footer-text">
             Don't have an account?{" "}
-            <span className="footer-link">Create one</span>
+            <span className="footer-link" >
+              <Link to="/signup">Create one</Link>
+            </span>
           </p>
  
         </div>
