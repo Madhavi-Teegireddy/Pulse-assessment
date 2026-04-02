@@ -30,7 +30,6 @@ const formatDuration = (secs?: number) => {
   return `${m}:${s.toString().padStart(2, "0")}`;
 };
  
-// Component
 export default function Dashboard() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);

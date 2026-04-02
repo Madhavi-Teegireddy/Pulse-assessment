@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./Signup.css";
+import { useNavigate } from "react-router-dom";
  
 export default function Signup() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -8,6 +9,8 @@ export default function Signup() {
   const [focused, setFocused] = useState<string | null>(null);
   const [showPass, setShowPass] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const navigate = useNavigate();
  
   useEffect(() => {
     setMounted(true);
@@ -22,13 +25,9 @@ export default function Signup() {
     try {
       setLoading(true);
       const res = await axios.post("http://localhost:5000/api/auth/signup", form);
-      if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
-      }
-       setForm({ name: "", email: "", password: "" });
- 
-      window.location.href = "/dashboard";
+      localStorage.setItem("token", res.data.token);
       alert("Signup success");
+      navigate("/dashboard");
       console.log(res.data);
     } catch (err: any) {
       alert(err.response?.data?.message || "Error");
@@ -39,8 +38,6 @@ export default function Signup() {
  
   return (
     <>
-     
- 
       <div className="signup-root">
         <div className="orb orb-1" />
         <div className="orb orb-2" />

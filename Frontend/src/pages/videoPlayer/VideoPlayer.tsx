@@ -86,7 +86,14 @@ export default function VideoPlayer() {
 
     console.log(res.data);
 
-    setVideo(res.data.videos || res.data);
+   const found = res.data.videos.find((v: Video) => v._id === id);
+
+if (!found) {
+  setError("Video not found");
+  return;
+}
+
+setVideo(found); 
 
   } catch (err) {
     console.error("Failed to fetch videos", err);
@@ -198,8 +205,10 @@ export default function VideoPlayer() {
                 onMouseLeave={() => playing && setShowControls(false)}
               >
                 <video
+                  key={streamUrl}
                   ref={videoRef}
                   src={streamUrl}
+                  controls
                   onClick={togglePlay}
                   onTimeUpdate={() => setCurrentTime(videoRef.current?.currentTime ?? 0)}
                   onLoadedMetadata={() => setDuration(videoRef.current?.duration ?? 0)}
