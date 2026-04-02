@@ -16,7 +16,10 @@ app.get('/', (req, res) => {
 })
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://pulse-assessment.vercel.app"
+  ],
   credentials: true
 }));
 
