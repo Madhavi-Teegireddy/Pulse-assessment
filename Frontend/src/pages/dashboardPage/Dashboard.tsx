@@ -50,7 +50,7 @@ export default function Dashboard() {
         window.location.href = "/login";
         return;
       }
-      const res = await axios.get("http://localhost:5000/api/videos", {
+      const res = await axios.get("https://pulse-assessment.onrender.com/api/videos", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setVideos(res.data.videos);

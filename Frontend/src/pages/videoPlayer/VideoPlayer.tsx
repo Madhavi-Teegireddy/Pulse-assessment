@@ -54,22 +54,6 @@ export default function VideoPlayer() {
     fetchVideo();
   }, []);
  
-  // const fetchVideo = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const token = localStorage.getItem("token");
-  //     const res = await axios.get(`http://localhost:5000/api/videos`, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     const found = res.data.find((v: Video) => v._id === id);
-  //     if (!found) { setError("Video not found"); return; }
-  //     setVideo(found);
-  //   } catch {
-  //     setError("Failed to load video");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
  const fetchVideo = async () => {
   try {
     setLoading(true);
@@ -80,7 +64,7 @@ export default function VideoPlayer() {
       return;
     }
 
-    const res = await axios.get("http://localhost:5000/api/videos", {
+    const res = await axios.get("https://pulse-assessment.onrender.com/api/videos", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -101,7 +85,7 @@ setVideo(found);
     setLoading(false);
   }
 };
-  const streamUrl = `http://localhost:5000/api/videos/stream/${id}`;
+  const streamUrl = `https://pulse-assessment.onrender.com/api/videos/stream/${id}`;
  
   // Player controls
   const togglePlay = () => {

@@ -54,9 +54,8 @@ export default function Upload() {
       formData.append("video", file);
       formData.append("title", title || file.name);
  
-      await axios.post("http://localhost:5000/api/videos/upload", formData, {
+      await axios.post("https://pulse-assessment.onrender.com/api/videos/upload", formData, {
         headers: {
-          // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
         onUploadProgress: (e) => {

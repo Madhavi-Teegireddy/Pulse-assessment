@@ -24,7 +24,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/api/auth/signup", form);
+      const res = await axios.post("https://pulse-assessment.onrender.com/api/auth/signup", form);
       localStorage.setItem("token", res.data.token);
       alert("Signup success");
       navigate("/dashboard");
